@@ -1,0 +1,21 @@
+---
+- name: install Golang
+  package:
+    name: golang
+    state: present
+
+- name: configure go variables
+  template:
+    src: golang.sh.j2
+    dest: /etc/profile.d/golang.sh
+    mode: "0755"
+
+- name: create go folders
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  with_items:
+    - "/usr/local/go"
+    - "/usr/local/go/bin"
+    - "/usr/local/go/src"
